@@ -13,15 +13,10 @@ const port = 4000;
 // << db setup >>
 const db = require("./db");
 const dbName = "TrySmartStudy";
-const collectionName = "courses";
+const collectionCourse = "courses";
 
 // << db init >>
-db.initialize(dbName, collectionName, function(dbCollection) { // successCallback
-    // get all items
-    dbCollection.find().toArray(function(err, result) {
-        if (err) throw err;
-          // console.log(result);
-    });
+db.initialize(dbName, collectionCourse, function(dbCollection) { // successCallback
 
     // << db CRUD routes >>
     server.get("/course/:id", (request, response) => {
@@ -34,6 +29,16 @@ db.initialize(dbName, collectionName, function(dbCollection) { // successCallbac
             response.json(result);
         });
     });
+}, function(err) { // failureCallback
+    throw (err);
+});
+
+const collectionStream = "streams";
+    
+// << db init >>
+db.initialize(dbName, collectionStream, function(dbCollection) { // successCallback
+
+    // << db CRUD routes >>
     server.get("/stream/:id", (request, response) => {
         const streamId = request.params.id;
         console.log(streamId)
